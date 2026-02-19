@@ -6,7 +6,7 @@ import { ArrowRight, Play } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-20 sm:pt-16 pb-12 overflow-hidden">
       {/* Background video */}
       <video
         autoPlay
@@ -33,7 +33,7 @@ const HeroSection = () => {
               ERP + BI + IA pour les entreprises algériennes
             </Badge>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
               Le cockpit{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-purple-500">
                 tout-en-un
@@ -41,7 +41,7 @@ const HeroSection = () => {
               pour piloter votre entreprise
             </h1>
 
-            <p className="text-lg text-white/70 max-w-lg leading-relaxed">
+            <p className="text-base sm:text-lg text-white/70 max-w-lg leading-relaxed">
               Centralisez vos données, automatisez vos rapports et prenez des décisions
               plus rapides grâce à l'intelligence artificielle. Timd réunit ERP, BI, IA
               et CRM dans une seule plateforme.
@@ -54,7 +54,7 @@ const HeroSection = () => {
               Pour PME, CMI et grandes entreprises en Algérie
             </Badge>
 
-            <div className="flex flex-wrap gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2">
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg shadow-primary/30"
@@ -74,7 +74,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right — Dashboard Mockup in glass card */}
-          <div className="relative">
+          <div className="relative hidden lg:block">
             {/* Gradient glow behind */}
             <div className="absolute -inset-4 bg-gradient-to-r from-primary/30 to-accent/30 rounded-[2rem] blur-3xl opacity-60" />
             <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-1 shadow-2xl shadow-black/20">
