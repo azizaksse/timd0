@@ -4,13 +4,7 @@ import DashboardMockup from "./DashboardMockup";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden gradient-bg-hero">
-      {/* Floating shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-[10%] w-72 h-72 rounded-full bg-primary/5 blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-[15%] w-96 h-96 rounded-full bg-accent/5 blur-3xl animate-float-slow" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/3 blur-3xl animate-pulse-glow" />
-      </div>
+    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">

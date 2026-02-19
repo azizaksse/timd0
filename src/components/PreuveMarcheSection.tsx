@@ -46,7 +46,7 @@ const PreuveMarcheSection = () => {
   const ref = useScrollReveal();
 
   return (
-    <section id="preuve" className="py-24 relative gradient-bg-hero">
+    <section id="preuve" className="py-24 relative bg-muted/30">
       <div ref={ref} className="container mx-auto px-4 section-fade-in">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Un besoin confirmé par le marché</h2>
