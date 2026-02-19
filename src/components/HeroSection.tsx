@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import DashboardMockup from "./DashboardMockup";
 import heroVideo from "@/assets/hero-video.mp4";
 import { ArrowRight, Play } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 sm:pt-16 pb-12 overflow-hidden">
       {/* Background video */}
@@ -30,28 +33,26 @@ const HeroSection = () => {
               variant="outline"
               className="border-primary/50 text-primary-foreground bg-primary/20 backdrop-blur-md px-4 py-1.5 text-xs"
             >
-              ERP + BI + IA pour les entreprises algériennes
+              {t.hero.badge}
             </Badge>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
-              Le cockpit{" "}
+              {t.hero.titleStart}{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-violet-300 to-purple-500">
-                tout-en-un
+                {t.hero.titleHighlight}
               </span>{" "}
-              pour piloter votre entreprise
+              {t.hero.titleEnd}
             </h1>
 
             <p className="text-base sm:text-lg text-white/70 max-w-lg leading-relaxed">
-              Centralisez vos données, automatisez vos rapports et prenez des décisions
-              plus rapides grâce à l'intelligence artificielle. Timd réunit ERP, BI, IA
-              et CRM dans une seule plateforme.
+              {t.hero.description}
             </p>
 
             <Badge
               variant="outline"
               className="border-white/20 text-white/80 bg-white/5 backdrop-blur-md px-4 py-1.5 text-xs"
             >
-              Pour PME, CMI et grandes entreprises en Algérie
+              {t.hero.targetBadge}
             </Badge>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-2">
@@ -59,16 +60,16 @@ const HeroSection = () => {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg shadow-primary/30"
               >
-                Réserver une démo
-                <ArrowRight className="w-4 h-4 ml-2" />
+                {t.hero.ctaPrimary}
+                <ArrowRight className="w-4 h-4 ms-2" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white rounded-full"
               >
-                <Play className="w-4 h-4 mr-2" />
-                Voir un exemple
+                <Play className="w-4 h-4 me-2" />
+                {t.hero.ctaSecondary}
               </Button>
             </div>
           </div>

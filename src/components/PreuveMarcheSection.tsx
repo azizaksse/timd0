@@ -1,10 +1,11 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const metrics = [
-  { value: 19, suffix: "", label: "entreprises interrogées", sub: "PME, CMI et grandes entreprises" },
-  { value: 61, suffix: "%", label: "intéressées par Timd", sub: "27,8 % supplémentaires en « peut-être »" },
-  { value: 10, suffix: "", label: "prêtes à tester", sub: "Prospects réels et engagés" },
+const metricValues = [
+  { value: 19, suffix: "" },
+  { value: 61, suffix: "%" },
+  { value: 10, suffix: "" },
 ];
 
 function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) {
@@ -15,7 +16,6 @@ function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          let start = 0;
           const duration = 1200;
           const startTime = performance.now();
           const step = (now: number) => {
@@ -44,22 +44,22 @@ function AnimatedNumber({ target, suffix }: { target: number; suffix: string }) 
 
 const PreuveMarcheSection = () => {
   const ref = useScrollReveal();
+  const { t } = useLanguage();
 
   return (
     <section id="preuve" className="py-24 relative bg-muted/30">
       <div ref={ref} className="container mx-auto px-4 section-fade-in">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Un besoin confirmé par le marché</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">{t.preuve.title}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Notre étude de marché auprès de 19 entreprises algériennes confirme un intérêt
-            fort pour une solution tout-en-un comme Timd.
+            {t.preuve.subtitle}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
-          {metrics.map((m) => (
-            <div key={m.label} className="glass-card p-8 text-center">
-              <AnimatedNumber target={m.value} suffix={m.suffix} />
+          {t.preuve.metrics.map((m, i) => (
+            <div key={i} className="glass-card p-8 text-center">
+              <AnimatedNumber target={metricValues[i].value} suffix={metricValues[i].suffix} />
               <p className="text-foreground font-semibold mt-3">{m.label}</p>
               <p className="text-xs text-muted-foreground mt-1">{m.sub}</p>
             </div>
@@ -68,9 +68,10 @@ const PreuveMarcheSection = () => {
 
         <div className="glass-card p-6 max-w-3xl mx-auto">
           <p className="text-sm text-muted-foreground leading-relaxed text-center">
-            <strong className="text-foreground">55,5 %</strong> des entreprises utilisent déjà un ERP
-            et <strong className="text-foreground">27,8 %</strong> travaillent encore sur Excel — un
-            marché conscient de ses besoins avec une opportunité majeure de migration vers Timd.
+            <strong className="text-foreground">{t.preuve.bottomText.part1}</strong>
+            {t.preuve.bottomText.text1}
+            <strong className="text-foreground">{t.preuve.bottomText.part2}</strong>
+            {t.preuve.bottomText.text2}
           </p>
         </div>
       </div>
