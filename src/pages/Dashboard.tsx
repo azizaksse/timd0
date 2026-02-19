@@ -38,12 +38,13 @@ import {
   FileText,
   FileSpreadsheet,
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import timdLogo from "@/assets/timd-logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "react-router-dom";
 import { exportToCSV, exportElementToPDF, exportTableToPDF } from "@/lib/exportUtils";
+import { useOnboardingTour } from "@/hooks/useOnboardingTour";
 
 // --- Mock Data ---
 const revenueData = [
@@ -158,6 +159,16 @@ const Dashboard = () => {
   const { lang } = useLanguage();
 
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
+  const { startTour, shouldShowTour, resetTour } = useOnboardingTour();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (shouldShowTour()) {
+        startTour();
+      }
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleExportCSV = () => {
     // Export KPIs
@@ -211,7 +222,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 text-gray-900 flex" dir={lang === "ar" ? "rtl" : "ltr"}>
 
       {/* Sidebar - Desktop */}
-      <aside className="hidden lg:flex flex-col w-64 border-r border-gray-200 bg-white p-5 relative z-10">
+      <aside id="tour-sidebar" className="hidden lg:flex flex-col w-64 border-r border-gray-200 bg-white p-5 relative z-10">
         <Link to="/" className="flex items-center gap-3 mb-8">
           <img src={timdLogo} alt="Timd" className="h-9 w-9 rounded-full object-cover border border-gray-200" />
           <span className="text-lg font-bold text-gray-900">Timd</span>
@@ -234,6 +245,13 @@ const Dashboard = () => {
         </nav>
 
         <div className="border-t border-gray-200 pt-4 space-y-1">
+          <button
+            onClick={() => { resetTour(); startTour(); }}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-purple-500 hover:text-purple-700 hover:bg-purple-50 transition-all"
+          >
+            <ChevronRight className="w-4.5 h-4.5" />
+            Relancer le tour
+          </button>
           <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-400 hover:text-gray-700 hover:bg-gray-50 transition-all">
             <Settings className="w-4.5 h-4.5" />
             Paramètres
@@ -294,7 +312,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="relative">
+              <div id="tour-export" className="relative">
                 <button
                   onClick={() => setExportMenuOpen(!exportMenuOpen)}
                   className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-600 text-white text-xs font-medium hover:bg-purple-700 transition-colors"
@@ -339,7 +357,7 @@ const Dashboard = () => {
 
         <div id="dashboard-content" className="p-4 sm:p-6 lg:p-8 space-y-6">
           {/* KPI Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div id="tour-kpis" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiCard icon={DollarSign} label="Chiffre d'affaires" value="8.9M DZD" change="+12.4%" positive />
             <KpiCard icon={TrendingUp} label="Croissance" value="+23%" change="+5.2%" positive />
             <KpiCard icon={Activity} label="Marge nette" value="18.2%" change="-0.8%" positive={false} />
@@ -347,7 +365,7 @@ const Dashboard = () => {
           </div>
 
           {/* AI Insights */}
-          <div className="bg-purple-50 border border-purple-200 rounded-2xl p-5">
+          <div id="tour-ai-insights" className="bg-purple-50 border border-purple-200 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <Brain className="w-4 h-4 text-purple-600" />
               <h3 className="text-sm font-semibold text-purple-700">Recommandations IA</h3>
@@ -367,7 +385,7 @@ const Dashboard = () => {
           {/* Charts row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Revenue chart - 2 cols */}
-            <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+            <div id="tour-revenue-chart" className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-sm font-semibold text-gray-900">Chiffre d'affaires vs Objectif</h3>
                 <span className="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">7 derniers mois</span>
@@ -391,7 +409,7 @@ const Dashboard = () => {
             </div>
 
             {/* Department pie */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+            <div id="tour-department-chart" className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
               <h3 className="text-sm font-semibold text-gray-900 mb-5">Répartition par département</h3>
               <ResponsiveContainer width="100%" height={180}>
                 <PieChart>
@@ -417,7 +435,7 @@ const Dashboard = () => {
           {/* Bottom row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Stock levels */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+            <div id="tour-stock" className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
               <h3 className="text-sm font-semibold text-gray-900 mb-5">Niveaux de stock</h3>
               <div className="space-y-4">
                 {stockData.map((item) => {
@@ -442,7 +460,7 @@ const Dashboard = () => {
             </div>
 
             {/* Recent orders */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+            <div id="tour-orders" className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-sm font-semibold text-gray-900">Commandes récentes</h3>
                 <button className="text-[10px] text-purple-600 hover:text-purple-500 flex items-center gap-1 transition-colors">
@@ -467,7 +485,7 @@ const Dashboard = () => {
           </div>
 
           {/* Activity chart */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+          <div id="tour-activity" className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
             <h3 className="text-sm font-semibold text-gray-900 mb-5">Activité du jour</h3>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={activityData}>
