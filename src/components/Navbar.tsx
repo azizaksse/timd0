@@ -22,14 +22,15 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-sm"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto flex items-center justify-between h-16 px-4">
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl">
+      <nav
+        className={`transition-all duration-300 rounded-full px-6 ${
+          scrolled
+            ? "bg-background/90 backdrop-blur-xl border border-border shadow-lg shadow-foreground/5"
+            : "bg-background/70 backdrop-blur-lg border border-border/50 shadow-md shadow-foreground/5"
+        }`}
+      >
+        <div className="flex items-center justify-between h-14">
         <a href="#" className="flex items-center">
           <img src={timdLogo} alt="Timd" className="h-8" />
         </a>
@@ -45,7 +46,7 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Button size="sm" className="bg-primary hover:bg-primary/90">
+          <Button size="sm" className="bg-primary hover:bg-primary/90 rounded-full">
             Réserver une démo
           </Button>
         </div>
@@ -60,8 +61,8 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 px-4 pb-4">
+        {mobileOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-xl rounded-2xl mt-2 border border-border shadow-lg p-4">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -72,12 +73,13 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Button size="sm" className="mt-2 w-full bg-primary hover:bg-primary/90">
+          <Button size="sm" className="mt-2 w-full bg-primary hover:bg-primary/90 rounded-full">
             Réserver une démo
           </Button>
         </div>
-      )}
-    </nav>
+        )}
+      </nav>
+    </div>
   );
 };
 
