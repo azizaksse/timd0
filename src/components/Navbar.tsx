@@ -77,7 +77,7 @@ const Navbar = () => {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <img src={timdLogo} alt="Timd" className="h-8 sm:h-12" />
+            <img src={timdLogo} alt="Timd" className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover border border-border/50" />
           </a>
 
           {/* Desktop */}
@@ -116,7 +116,7 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden bg-background/95 backdrop-blur-xl rounded-2xl mt-2 border border-border shadow-lg p-4">
+          <div className="lg:hidden absolute top-full left-0 right-0 mt-2 bg-background backdrop-blur-xl rounded-2xl border border-border shadow-2xl shadow-black/20 p-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
