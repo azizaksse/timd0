@@ -1,13 +1,14 @@
 import { Instagram, Linkedin } from "lucide-react";
+import timdLogo from "@/assets/timd-logo.png";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border/50 py-12">
+    <footer className="border-t border-border py-12 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <span className="text-xl font-bold gradient-text">Timd</span>
+            <img src={timdLogo} alt="Timd" className="h-8 mb-3" />
             <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
               Plateforme tout-en-un ERP + BI + IA pour les entreprises algériennes.
               Centralisez vos données, automatisez vos décisions.

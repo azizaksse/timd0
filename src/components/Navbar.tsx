@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import timdLogo from "@/assets/timd-logo.png";
 
 const navLinks = [
   { label: "Produit", href: "#solution" },
@@ -24,13 +25,13 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/20"
+          ? "bg-background/90 backdrop-blur-xl border-b border-border shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <a href="#" className="text-2xl font-bold gradient-text">
-          Timd
+        <a href="#" className="flex items-center">
+          <img src={timdLogo} alt="Timd" className="h-8" />
         </a>
 
         {/* Desktop */}

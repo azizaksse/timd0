@@ -19,7 +19,7 @@ const stockData = [
 
 const DashboardMockup = () => {
   return (
-    <div className="glass-card p-6 space-y-4">
+    <div className="glass-card p-6 space-y-4 shadow-lg border-border">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
