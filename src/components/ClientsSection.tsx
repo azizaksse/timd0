@@ -76,7 +76,7 @@ const ClientsSection = () => {
   const secondHalf = testimonials.slice(3);
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section id="clients" className="py-24 relative overflow-hidden">
       <div ref={ref} className="section-fade-in">
         <div className="text-center mb-16 px-4">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
