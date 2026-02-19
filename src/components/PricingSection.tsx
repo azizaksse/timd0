@@ -4,12 +4,26 @@ import { Button } from "@/components/ui/button";
 import { Check, Users } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+type BillingCycle = "monthly" | "annual";
+
 const PricingSection = () => {
   const ref = useScrollReveal();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const highlightedIndex = 1;
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const [showPerSeat, setShowPerSeat] = useState(false);
+  const [seatCount, setSeatCount] = useState(5);
+  const seatOptions = [1, 3, 5, 10, 20];
+  const isAnnual = billingCycle === "annual";
+
+  const parsePrice = (value?: string) => {
+    if (!value) return 0;
+    const parsed = Number(value.replace(/\s/g, "").replace(/,/g, ""));
+    return Number.isNaN(parsed) ? 0 : parsed;
+  };
+
+  const formatPrice = (value: number) =>
+    new Intl.NumberFormat(lang === "ar" ? "ar-DZ" : "fr-FR").format(value);
 
   return (
     <section id="tarifs" className="py-24 relative bg-muted/30">
@@ -24,18 +38,18 @@ const PricingSection = () => {
 
           {/* Billing toggle */}
           <div className="flex items-center justify-center gap-4 mb-4">
-            <span className={`text-sm font-medium transition-colors ${!isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+            <span className={`text-sm font-medium transition-colors ${billingCycle === "monthly" ? "text-foreground" : "text-muted-foreground"}`}>
               {t.pricing.monthly}
             </span>
             <button
-              onClick={() => setIsAnnual(!isAnnual)}
+              onClick={() => setBillingCycle(billingCycle === "monthly" ? "annual" : "monthly")}
               className={`relative w-14 h-7 rounded-full transition-colors ${isAnnual ? "bg-primary" : "bg-muted-foreground/30"}`}
             >
               <span
                 className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow-md transition-transform ${isAnnual ? "translate-x-7" : ""}`}
               />
             </button>
-            <span className={`text-sm font-medium transition-colors ${isAnnual ? "text-foreground" : "text-muted-foreground"}`}>
+            <span className={`text-sm font-medium transition-colors ${billingCycle === "annual" ? "text-foreground" : "text-muted-foreground"}`}>
               {t.pricing.annual}
             </span>
             {isAnnual && (
@@ -57,13 +71,36 @@ const PricingSection = () => {
             <Users className="w-3.5 h-3.5" />
             {t.pricing.perSeatLabel}
           </button>
+
+          {showPerSeat && (
+            <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
+              {seatOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setSeatCount(option)}
+                  className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+                    seatCount === option
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-border text-muted-foreground hover:border-primary/40"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+              <span className="text-xs text-muted-foreground ms-1">
+                {seatCount} {t.pricing.perSeatLabel}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {t.pricing.plans.map((plan, i) => {
-            const price = showPerSeat
-              ? (isAnnual ? plan.perSeatAnnual : plan.perSeat)
-              : (isAnnual ? plan.priceAnnual : plan.price);
+            const basePrice = parsePrice(isAnnual ? plan.priceAnnual : plan.price);
+            const perSeatPrice = parsePrice(isAnnual ? plan.perSeatAnnual : plan.perSeat);
+            const totalPrice = showPerSeat ? perSeatPrice * seatCount : basePrice;
+            const price = formatPrice(totalPrice);
             const currency = isAnnual ? t.pricing.currencyAnnual : t.pricing.currency;
 
             return (
@@ -90,7 +127,9 @@ const PricingSection = () => {
                     <span className="text-muted-foreground text-sm">{currency}</span>
                   </div>
                   {showPerSeat && (
-                    <p className="text-xs text-primary/70 mt-1">/ {t.pricing.perSeatLabel}</p>
+                    <p className="text-xs text-primary/70 mt-1">
+                      {seatCount} × {formatPrice(perSeatPrice)} {currency}
+                    </p>
                   )}
                   <p className="text-xs text-muted-foreground mt-1">{t.pricing.startingFrom}</p>
                 </div>
