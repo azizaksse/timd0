@@ -34,12 +34,16 @@ import {
   ArrowDownRight,
   Menu,
   X,
+  Download,
+  FileText,
+  FileSpreadsheet,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import timdLogo from "@/assets/timd-logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Link } from "react-router-dom";
+import { exportToCSV, exportElementToPDF, exportTableToPDF } from "@/lib/exportUtils";
 
 // --- Mock Data ---
 const revenueData = [
@@ -153,6 +157,47 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { lang } = useLanguage();
 
+  const [exportMenuOpen, setExportMenuOpen] = useState(false);
+
+  const handleExportCSV = () => {
+    // Export KPIs
+    exportToCSV("timd-kpis", ["Indicateur", "Valeur", "Variation"], [
+      ["Chiffre d'affaires", "8.9M DZD", "+12.4%"],
+      ["Croissance", "+23%", "+5.2%"],
+      ["Marge nette", "18.2%", "-0.8%"],
+      ["Clients actifs", "147", "+8"],
+    ]);
+  };
+
+  const handleExportRevenueCSV = () => {
+    exportToCSV("timd-revenue", ["Mois", "CA (k DZD)", "Objectif (k DZD)"],
+      revenueData.map(r => [r.month, String(r.revenue), String(r.target)])
+    );
+  };
+
+  const handleExportOrdersCSV = () => {
+    exportToCSV("timd-commandes", ["ID", "Client", "Montant (DZD)", "Statut"],
+      recentOrders.map(o => [o.id, o.client, o.amount, o.status])
+    );
+  };
+
+  const handleExportOrdersPDF = () => {
+    exportTableToPDF("timd-commandes", "Commandes récentes — Timd",
+      ["ID", "Client", "Montant (DZD)", "Statut"],
+      recentOrders.map(o => [o.id, o.client, o.amount, o.status])
+    );
+  };
+
+  const handleExportDashboardPDF = () => {
+    exportElementToPDF("dashboard-content", "timd-tableau-de-bord");
+  };
+
+  const handleExportStockCSV = () => {
+    exportToCSV("timd-stock", ["Catégorie", "Stock", "Capacité", "Taux (%)"],
+      stockData.map(s => [s.category, String(s.stock), String(s.capacity), String(Math.round((s.stock / s.capacity) * 100))])
+    );
+  };
+
   const customTooltipStyle = {
     backgroundColor: "#fff",
     border: "1px solid #e5e7eb",
@@ -249,6 +294,37 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <div className="relative">
+                <button
+                  onClick={() => setExportMenuOpen(!exportMenuOpen)}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-purple-600 text-white text-xs font-medium hover:bg-purple-700 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  Exporter
+                </button>
+                {exportMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-30">
+                    <button onClick={() => { handleExportDashboardPDF(); setExportMenuOpen(false); }} className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50">
+                      <FileText className="w-3.5 h-3.5 text-red-500" /> Dashboard complet (PDF)
+                    </button>
+                    <button onClick={() => { handleExportCSV(); setExportMenuOpen(false); }} className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50">
+                      <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-500" /> KPIs (CSV)
+                    </button>
+                    <button onClick={() => { handleExportRevenueCSV(); setExportMenuOpen(false); }} className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50">
+                      <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-500" /> Chiffre d'affaires (CSV)
+                    </button>
+                    <button onClick={() => { handleExportStockCSV(); setExportMenuOpen(false); }} className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50">
+                      <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-500" /> Stock (CSV)
+                    </button>
+                    <button onClick={() => { handleExportOrdersCSV(); setExportMenuOpen(false); }} className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50">
+                      <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-500" /> Commandes (CSV)
+                    </button>
+                    <button onClick={() => { handleExportOrdersPDF(); setExportMenuOpen(false); }} className="w-full flex items-center gap-2 px-4 py-2.5 text-xs text-gray-700 hover:bg-gray-50">
+                      <FileText className="w-3.5 h-3.5 text-red-500" /> Commandes (PDF)
+                    </button>
+                  </div>
+                )}
+              </div>
               <LanguageSwitcher />
               <button className="relative w-9 h-9 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors">
                 <Bell className="w-4 h-4 text-gray-500" />
@@ -261,7 +337,7 @@ const Dashboard = () => {
           </div>
         </header>
 
-        <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+        <div id="dashboard-content" className="p-4 sm:p-6 lg:p-8 space-y-6">
           {/* KPI Row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <KpiCard icon={DollarSign} label="Chiffre d'affaires" value="8.9M DZD" change="+12.4%" positive />
