@@ -4,6 +4,7 @@ import DashboardMockup from "./DashboardMockup";
 import heroVideo from "@/assets/hero-video.mp4";
 import { ArrowRight, Play } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   const { t } = useLanguage();
@@ -67,9 +68,12 @@ const HeroSection = () => {
                 size="lg"
                 variant="outline"
                 className="border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white rounded-full"
+                asChild
               >
-                <Play className="w-4 h-4 me-2" />
-                {t.hero.ctaSecondary}
+                <Link to="/dashboard">
+                  <Play className="w-4 h-4 me-2" />
+                  {t.hero.ctaSecondary}
+                </Link>
               </Button>
             </div>
           </div>
