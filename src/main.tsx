@@ -5,7 +5,7 @@ import "./index.css";
 import { convexClient } from "@/lib/convex";
 
 if (!convexClient && import.meta.env.DEV) {
-  console.warn("Convex is not configured. Set VITE_CONVEX_URL in your .env.local file.");
+  console.warn("Convex is not configured. Set VITE_CONVEX_URL (or VITE_CONVEX_SITE_URL) in your .env.local file.");
 }
 
 createRoot(document.getElementById("root")!).render(
