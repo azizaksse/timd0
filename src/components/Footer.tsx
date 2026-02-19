@@ -41,7 +41,7 @@ const Footer = () => {
           <div className="border-t border-foreground/10 pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {/* Brand */}
             <div>
-              <img src={timdLogo} alt="Timd" className="h-8 mb-3" />
+              <img src={timdLogo} alt="Timd" className="h-10 w-10 rounded-full object-cover border border-border/50 mb-3" />
               <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
                 {t.footer.brandDesc}
               </p>
