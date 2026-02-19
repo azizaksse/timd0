@@ -1,4 +1,5 @@
 import { AreaChart, Area, BarChart, Bar, ResponsiveContainer } from "recharts";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const salesData = [
   { month: "Jan", value: 4200 },
@@ -18,42 +19,44 @@ const stockData = [
 ];
 
 const DashboardMockup = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="rounded-2xl p-6 space-y-4 bg-white/5 backdrop-blur-sm">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs text-white/50">Tableau de bord</p>
-          <h3 className="text-sm font-semibold text-white">Vue d'ensemble</h3>
+          <p className="text-xs text-white/50">{t.dashboard.title}</p>
+          <h3 className="text-sm font-semibold text-white">{t.dashboard.subtitle}</h3>
         </div>
         <span className="text-[10px] text-white/50 bg-white/10 px-2 py-0.5 rounded-full">
-          Étude sur 19 entreprises
+          {t.dashboard.study}
         </span>
       </div>
 
       {/* KPI Row */}
       <div className="grid grid-cols-3 gap-3">
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-          <p className="text-[10px] text-white/50">CA mensuel</p>
+          <p className="text-[10px] text-white/50">{t.dashboard.caLabel}</p>
           <p className="text-lg font-bold text-white">8.9M <span className="text-xs text-white/50">DZD</span></p>
           <p className="text-[10px] text-emerald-400">+12.4%</p>
         </div>
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-          <p className="text-[10px] text-white/50">Croissance</p>
+          <p className="text-[10px] text-white/50">{t.dashboard.growthLabel}</p>
           <p className="text-lg font-bold text-white">+23%</p>
-          <p className="text-[10px] text-emerald-400">vs trimestre</p>
+          <p className="text-[10px] text-emerald-400">{t.dashboard.vsQuarter}</p>
         </div>
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-          <p className="text-[10px] text-white/50">Marge nette</p>
+          <p className="text-[10px] text-white/50">{t.dashboard.marginLabel}</p>
           <p className="text-lg font-bold text-white">18.2%</p>
-          <p className="text-[10px] text-purple-400">stable</p>
+          <p className="text-[10px] text-purple-400">{t.dashboard.stable}</p>
         </div>
       </div>
 
       {/* Charts */}
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-          <p className="text-[10px] text-white/50 mb-2">Ventes (M DZD)</p>
+          <p className="text-[10px] text-white/50 mb-2">{t.dashboard.salesChart}</p>
           <ResponsiveContainer width="100%" height={80}>
             <AreaChart data={salesData}>
               <defs>
@@ -67,7 +70,7 @@ const DashboardMockup = () => {
           </ResponsiveContainer>
         </div>
         <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-          <p className="text-[10px] text-white/50 mb-2">Stock par catégorie</p>
+          <p className="text-[10px] text-white/50 mb-2">{t.dashboard.stockChart}</p>
           <ResponsiveContainer width="100%" height={80}>
             <BarChart data={stockData}>
               <Bar dataKey="value" fill="#a78bfa" radius={[3, 3, 0, 0]} />

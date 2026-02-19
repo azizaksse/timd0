@@ -2,20 +2,23 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import timdLogo from "@/assets/timd-logo.png";
-
-const navLinks = [
-  { label: "Produit", href: "#solution" },
-  { label: "Pour qui ?", href: "#pour-qui" },
-  { label: "Tarifs", href: "#tarifs" },
-  { label: "Clients", href: "#clients" },
-  { label: "Preuve marché", href: "#preuve" },
-  { label: "Vision", href: "#vision" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { label: t.nav.produit, href: "#solution" },
+    { label: t.nav.pourQui, href: "#pour-qui" },
+    { label: t.nav.tarifs, href: "#tarifs" },
+    { label: t.nav.clients, href: "#clients" },
+    { label: t.nav.preuve, href: "#preuve" },
+    { label: t.nav.vision, href: "#vision" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,7 +26,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Track active section via IntersectionObserver
   useEffect(() => {
     const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
     const observers: IntersectionObserver[] = [];
@@ -94,18 +96,22 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
+            <LanguageSwitcher />
             <Button size="sm" className="bg-primary hover:bg-primary/90 rounded-full">
-              Réserver une démo
+              {t.nav.demo}
             </Button>
           </div>
 
           {/* Mobile toggle */}
-          <button
-            className="lg:hidden text-foreground"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="lg:hidden flex items-center gap-2">
+            <LanguageSwitcher />
+            <button
+              className="text-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
@@ -126,7 +132,7 @@ const Navbar = () => {
               </a>
             ))}
             <Button size="sm" className="mt-2 w-full bg-primary hover:bg-primary/90 rounded-full">
-              Réserver une démo
+              {t.nav.demo}
             </Button>
           </div>
         )}

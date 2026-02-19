@@ -55,8 +55,16 @@
     font-family: 'DM Sans', system-ui, sans-serif;
   }
 
+  [dir="rtl"] body {
+    font-family: 'Noto Sans Arabic', 'DM Sans', system-ui, sans-serif;
+  }
+
   h1, h2, h3, h4 {
     font-family: 'DM Serif Display', Georgia, serif;
+  }
+
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4 {
+    font-family: 'Noto Sans Arabic', Georgia, serif;
   }
 
   html {
