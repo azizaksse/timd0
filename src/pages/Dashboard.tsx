@@ -102,8 +102,17 @@ const sidebarItems = [
   { id: "stock" as SidebarSection, icon: Package, label: "Stock" },
   { id: "clients" as SidebarSection, icon: Users, label: "Clients" },
   { id: "reports" as SidebarSection, icon: BarChart3, label: "Rapports" },
-  { id: "insights" as SidebarSection, icon: Brain, label: "IA Insights" },
+  { id: "insights" as SidebarSection, icon: Brain, label: "IA Insight" },
 ];
+
+const sectionHeadings: Record<SidebarSection, { title: string; subtitle: string }> = {
+  overview: { title: "Tableau de bord", subtitle: "Vue d'ensemble interactive" },
+  orders: { title: "Commandes", subtitle: "Suivi et details des commandes recentes" },
+  stock: { title: "Stock", subtitle: "Niveaux de stock et alertes operationnelles" },
+  clients: { title: "Clients", subtitle: "Comptes strategiques et niveau de risque" },
+  reports: { title: "Rapports", subtitle: "Analytique de performance et activite" },
+  insights: { title: "IA Insight", subtitle: "Recommandations intelligentes en direct" },
+};
 
 const detailModeLabels: Record<DetailMode, string> = {
   kpi: "Detail KPI",
@@ -182,6 +191,7 @@ const Dashboard = () => {
   const selectedTask = tasks?.find((task) => task._id === selectedTaskId) ?? null;
   const completedTasks = tasks?.filter((task) => task.completed).length ?? 0;
   const pendingTasks = (tasks?.length ?? 0) - completedTasks;
+  const currentSectionHeading = sectionHeadings[activeSection];
 
   useEffect(() => {
     if (!tasks || tasks.length === 0) {
@@ -205,7 +215,6 @@ const Dashboard = () => {
   const goToSection = (section: SidebarSection) => {
     setActiveSection(section);
     setSidebarOpen(false);
-    document.getElementById(section)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const openKpiDetails = (id: KpiId) => {
@@ -344,9 +353,9 @@ const Dashboard = () => {
               </button>
               <div>
                 <h1 className="text-lg font-bold text-slate-900" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  Tableau de bord
+                  {currentSectionHeading.title}
                 </h1>
-                <p className="text-xs text-slate-500">Vue d'ensemble interactive</p>
+                <p className="text-xs text-slate-500">{currentSectionHeading.subtitle}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -368,6 +377,7 @@ const Dashboard = () => {
         </header>
 
         <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+          {activeSection === "overview" && (
           <section id="overview" className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {kpiCards.map((item) => (
@@ -557,7 +567,9 @@ const Dashboard = () => {
               </div>
             </div>
           </section>
+          )}
 
+          {activeSection === "insights" && (
           <section id="insights" className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <Brain className="w-4 h-4 text-blue-700" />
@@ -579,7 +591,9 @@ const Dashboard = () => {
               ))}
             </div>
           </section>
+          )}
 
+          {activeSection === "reports" && (
           <section id="reports" className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
               <div className="flex items-center justify-between mb-5">
@@ -626,8 +640,11 @@ const Dashboard = () => {
               </div>
             </div>
           </section>
+          )}
 
+          {(activeSection === "stock" || activeSection === "orders") && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {activeSection === "stock" && (
             <section id="stock" className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-900 mb-5">Niveaux de stock</h3>
               <div className="space-y-4">
@@ -648,7 +665,9 @@ const Dashboard = () => {
                 })}
               </div>
             </section>
+            )}
 
+            {activeSection === "orders" && (
             <section id="orders" className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="text-sm font-semibold text-slate-900">Commandes recentes</h3>
@@ -680,8 +699,11 @@ const Dashboard = () => {
                 ))}
               </div>
             </section>
+            )}
           </div>
+          )}
 
+          {activeSection === "clients" && (
           <section id="clients" className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-semibold text-slate-900">Details clients</h3>
@@ -704,7 +726,9 @@ const Dashboard = () => {
               ))}
             </div>
           </section>
+          )}
 
+          {activeSection === "reports" && (
           <section className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <h3 className="text-sm font-semibold text-slate-900 mb-5">Activite du jour</h3>
             <ResponsiveContainer width="100%" height={200}>
@@ -718,6 +742,7 @@ const Dashboard = () => {
               </BarChart>
             </ResponsiveContainer>
           </section>
+          )}
         </div>
       </main>
     </div>
