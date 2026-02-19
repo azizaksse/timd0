@@ -35,7 +35,7 @@ const Footer = () => {
             </a>
           </div>
 
-          <div className="border-t border-foreground/10 pt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          <div className="border-t border-foreground/10 pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {/* Brand */}
             <div>
               <img src={timdLogo} alt="Timd" className="h-8 mb-3" />

@@ -62,13 +62,13 @@ const PricingSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`glass-card p-8 flex flex-col relative ${
+              className={`glass-card p-6 sm:p-8 flex flex-col relative ${
                 plan.highlighted
-                  ? "border-primary/60 ring-1 ring-primary/30 scale-[1.02]"
+                  ? "border-primary/60 ring-1 ring-primary/30 sm:scale-[1.02]"
                   : ""
               }`}
             >

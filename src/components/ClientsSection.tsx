@@ -56,7 +56,7 @@ const TestimonialCard = ({
   company,
   comment,
 }: (typeof testimonials)[0]) => (
-  <div className="glass-card p-6 mx-3 w-[340px] flex-shrink-0 whitespace-normal">
+  <div className="glass-card p-5 sm:p-6 mx-2 sm:mx-3 w-[280px] sm:w-[340px] flex-shrink-0 whitespace-normal">
     <Quote className="w-5 h-5 text-primary/40 mb-3" />
     <p className="text-sm text-muted-foreground leading-relaxed mb-4">
       "{comment}"
