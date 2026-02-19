@@ -93,6 +93,17 @@ const Footer = () => {
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} {t.footer.copyright}
             </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Made by{" "}
+              <a
+                href="https://kassemthe-devloper.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Kassem
+              </a>
+            </p>
           </div>
         </div>
       </div>
