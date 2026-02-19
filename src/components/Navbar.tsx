@@ -32,7 +32,7 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between h-14">
         <a href="#" className="flex items-center">
-          <img src={timdLogo} alt="Timd" className="h-8" />
+          <img src={timdLogo} alt="Timd" className="h-12" />
         </a>
 
         {/* Desktop */}
