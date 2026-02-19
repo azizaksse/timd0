@@ -52,11 +52,20 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'DM Serif Display', Georgia, serif;
   }
 
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+  }
+
+  section {
+    scroll-snap-align: start;
   }
 }
 
