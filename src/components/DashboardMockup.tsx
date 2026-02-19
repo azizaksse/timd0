@@ -33,17 +33,17 @@ const DashboardMockup = () => {
 
       {/* KPI Row */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="bg-secondary/40 rounded-xl p-3">
+        <div className="bg-secondary rounded-xl p-3">
           <p className="text-[10px] text-muted-foreground">CA mensuel</p>
           <p className="text-lg font-bold text-foreground">8.9M <span className="text-xs text-muted-foreground">DZD</span></p>
           <p className="text-[10px] text-accent">+12.4%</p>
         </div>
-        <div className="bg-secondary/40 rounded-xl p-3">
+        <div className="bg-secondary rounded-xl p-3">
           <p className="text-[10px] text-muted-foreground">Croissance</p>
           <p className="text-lg font-bold text-foreground">+23%</p>
           <p className="text-[10px] text-accent">vs trimestre</p>
         </div>
-        <div className="bg-secondary/40 rounded-xl p-3">
+        <div className="bg-secondary rounded-xl p-3">
           <p className="text-[10px] text-muted-foreground">Marge nette</p>
           <p className="text-lg font-bold text-foreground">18.2%</p>
           <p className="text-[10px] text-primary">stable</p>
@@ -52,7 +52,7 @@ const DashboardMockup = () => {
 
       {/* Charts */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-secondary/30 rounded-xl p-3">
+        <div className="bg-secondary rounded-xl p-3">
           <p className="text-[10px] text-muted-foreground mb-2">Ventes (M DZD)</p>
           <ResponsiveContainer width="100%" height={80}>
             <AreaChart data={salesData}>
@@ -66,7 +66,7 @@ const DashboardMockup = () => {
             </AreaChart>
           </ResponsiveContainer>
         </div>
-        <div className="bg-secondary/30 rounded-xl p-3">
+        <div className="bg-secondary rounded-xl p-3">
           <p className="text-[10px] text-muted-foreground mb-2">Stock par catégorie</p>
           <ResponsiveContainer width="100%" height={80}>
             <BarChart data={stockData}>
