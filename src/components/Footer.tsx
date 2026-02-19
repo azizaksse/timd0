@@ -4,21 +4,38 @@ import footerVideo from "@/assets/footer-video.mp4";
 
 const Footer = () => {
   return (
-    <footer className="relative overflow-hidden border-t border-border">
+    <footer className="relative overflow-hidden">
       {/* Background video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-15"
+        className="absolute inset-0 w-full h-full object-cover opacity-30"
       >
         <source src={footerVideo} type="video/mp4" />
       </video>
+      <div className="absolute inset-0 bg-background/40" />
 
-      <div className="relative z-10 py-12">
+      <div className="relative z-10 py-16">
         <div className="container mx-auto px-4">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* CTA banner */}
+          <div className="text-center mb-14">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-3">
+              Prêt à transformer votre gestion ?
+            </h3>
+            <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm">
+              Rejoignez les entreprises algériennes qui font confiance à Timd.
+            </p>
+            <a
+              href="#"
+              className="inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-8 py-3 text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              Réserver une démo
+            </a>
+          </div>
+
+          <div className="border-t border-foreground/10 pt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {/* Brand */}
             <div>
               <img src={timdLogo} alt="Timd" className="h-8 mb-3" />
