@@ -8,6 +8,9 @@ export interface PlanTranslation {
   subtitle: string;
   desc: string;
   price: string;
+  priceAnnual: string;
+  perSeat?: string;
+  perSeatAnnual?: string;
   features: string[];
 }
 
@@ -66,8 +69,13 @@ export interface Translations {
     subtitle: string;
     popular: string;
     currency: string;
+    currencyAnnual: string;
+    perSeatLabel: string;
     startingFrom: string;
     cta: string;
+    monthly: string;
+    annual: string;
+    annualSave: string;
     plans: PlanTranslation[];
   };
   clients: {
