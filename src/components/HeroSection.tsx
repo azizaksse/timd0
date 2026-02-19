@@ -16,27 +16,30 @@ const HeroSection = () => {
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
+      {/* Overlay for text readability */}
+      <div className="absolute inset-0 bg-background/70" />
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left — Copy */}
           <div className="space-y-6">
-            <Badge variant="outline" className="border-primary/40 text-primary bg-primary/10 px-4 py-1.5 text-xs">
+            <Badge variant="outline" className="border-primary/40 text-primary bg-background/80 px-4 py-1.5 text-xs backdrop-blur-sm">
               ERP + BI + IA pour les entreprises algériennes
             </Badge>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
               Le cockpit{" "}
               <span className="gradient-text">tout-en-un</span>{" "}
               pour piloter votre entreprise
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
+            <p className="text-lg text-foreground/70 max-w-lg leading-relaxed">
               Centralisez vos données, automatisez vos rapports et prenez des décisions
               plus rapides grâce à l'intelligence artificielle. Timd réunit ERP, BI, IA
               et CRM dans une seule plateforme.
             </p>
 
-            <Badge variant="outline" className="border-accent/40 text-accent bg-accent/10 px-4 py-1.5 text-xs">
+            <Badge variant="outline" className="border-primary/40 text-primary bg-background/80 px-4 py-1.5 text-xs backdrop-blur-sm">
               Pour PME, CMI et grandes entreprises en Algérie
             </Badge>
 
@@ -44,7 +47,7 @@ const HeroSection = () => {
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 Réserver une démo
               </Button>
-              <Button size="lg" variant="outline" className="border-border hover:bg-secondary">
+              <Button size="lg" variant="outline" className="border-foreground/20 bg-background/60 backdrop-blur-sm hover:bg-background/80 text-foreground">
                 Voir un exemple de tableau de bord
               </Button>
             </div>
